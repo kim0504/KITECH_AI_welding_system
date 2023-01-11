@@ -15,27 +15,21 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import random
+import os
 
 from sklearn.metrics import precision_score , recall_score , confusion_matrix, classification_report
-
-from google.colab import drive
-drive.mount('/content/drive')
-
-"""#path setting"""
-
-PATH = ""
 
 """#data processing
 
 data load
 """
 
-PATH = "/content/drive/MyDrive/colab/SAW_defects_detection/dataset/data_9000" #전처리한 데이터 path
+IMAGE_PATH = os.getcwd() #전처리한 데이터 path
 
-normal_data = np.load(PATH+"/normal_9000_30.npy")
-wet_data = np.load(PATH+"/wet_9000_30.npy")
-oiled_data = np.load(PATH+"/oiled_9000_30.npy")
-rust_data = np.load(PATH+"/rust_9000_30.npy")
+normal_data = np.load(IMAGE_PATH+"/normal_9000_30.npy")
+wet_data = np.load(IMAGE_PATH+"/wet_9000_30.npy")
+oiled_data = np.load(IMAGE_PATH+"/oiled_9000_30.npy")
+rust_data = np.load(IMAGE_PATH+"/rust_9000_30.npy")
 
 normal_data.shape, wet_data.shape, oiled_data.shape, rust_data.shape
 
