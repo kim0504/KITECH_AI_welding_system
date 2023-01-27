@@ -6,7 +6,7 @@ import numpy as np
 class representation():
 
     def tdms_to_df(self, file:TdmsFile)->pd.DataFrame:
-        tdms_file = TdmsFile("".join(["../GUI_2nd_temp/",file]))
+        tdms_file = TdmsFile("".join(["../../GUI_2nd_temp/",file]))
         tdms_df = tdms_file["Untitled"].as_dataframe()
         print(tdms_df.shape)
         return tdms_df
