@@ -4,9 +4,11 @@ import pandas as pd
 import numpy as np
 
 class representation():
+    def __init__(self):
+        self.DIR_PATH = "../../GUI_2nd_temp/"
 
     def tdms_to_df(self, file:TdmsFile)->pd.DataFrame:
-        tdms_file = TdmsFile("".join(["../../GUI_2nd_temp/",file]))
+        tdms_file = TdmsFile("".join([self.DIR_PATH,file]))
         tdms_df = tdms_file["Untitled"].as_dataframe()
         print(tdms_df.shape)
         return tdms_df
@@ -19,9 +21,6 @@ class representation():
             return pd.concat(df_list)
         elif len(df_list)==1:
             return df_list[0]
-
-    def array_split(self, array, size):
-        return [np.array(array.index)[i * size:(i + 1) * size] for i in range((len(array) + size - 1) // size )]
 
     def set_range(self, tdms_df):
         I = tdms_df['Voltage']
@@ -36,22 +35,22 @@ class representation():
         for j in range(len(I_data)-1):
             if I_data[j+1]>res:
                 print(I_data[j+1])
-            transMat_I[I_data[j],I_data[j+1]]=transMat_I[I_data[j],I_data[j+1]]+1
-            transMat_V[V_data[j],V_data[j+1]]=transMat_V[V_data[j],V_data[j+1]]+1
+            transMat_I[I_data[j],I_data[j+1]] += 1
+            transMat_V[V_data[j],V_data[j+1]] += 1
         return transMat_I, transMat_V
 
     def concurrency_matrix(self, I_data, V_data, res):
         conMat=np.zeros([res+2,res+2])
         for j in range(len(I_data)):
-            conMat[I_data[j],V_data[j]]=conMat[I_data[j],V_data[j]]+1
+            conMat[I_data[j],V_data[j]] += 1
         return conMat
 
     def generate_matirces(self, tdms_df, res):
         arr_I = np.array(tdms_df['Voltage'])
         arr_V = np.array(tdms_df['Voltage_0'])
 
-        bins_I=np.arange(I_minmax[0],I_minmax[1],(I_minmax[1]-I_minmax[0])/res )
-        bins_V=np.arange(V_minmax[0],V_minmax[1],(V_minmax[1]-V_minmax[0])/res )
+        bins_I=np.arange(I_minmax[0],I_minmax[1],(I_minmax[1]-I_minmax[0])/res)
+        bins_V=np.arange(V_minmax[0],V_minmax[1],(V_minmax[1]-V_minmax[0])/res)
 
         digt_I=np.digitize(arr_I,bins=bins_I)
         digt_V=np.digitize(arr_V,bins=bins_V)
@@ -73,9 +72,8 @@ class representation():
             if len(tdms_df) > size:
                 global I_minmax, V_minmax
                 I_minmax, V_minmax = self.set_range(tdms_df)
-                split_index = self.array_split(tdms_df, size)
-                for index in split_index:
-                    con_trans = self.generate_matirces(tdms_df[index[0]:index[-1]], res)
+                for i in range(0, len(tdms_df), size):
+                    con_trans = self.generate_matirces(tdms_df[i:i+size], 28)
                     temp_list.append(con_trans)
         except:
             return None
