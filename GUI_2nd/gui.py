@@ -61,6 +61,12 @@ class GUI(QWidget):
         layout = QHBoxLayout()
         total_title = self.Qlabel_style('Total')
         self.total_label = self.Qlabel_style('-')
+        total_title.setStyleSheet("border-style: solid;"
+                                  "border-width: 10px; "
+                                  "border-color: #dbd9d9;"
+                                  "border-radius:20px;"
+                                  "padding: 10% 0; "
+                                  "background-color: #dbd9d9")
         layout.addWidget(total_title)
         layout.addWidget(self.total_label)
         return layout
@@ -68,12 +74,13 @@ class GUI(QWidget):
     def normal_layout(self):
         layout = QHBoxLayout()
         normal_title = self.Qlabel_style('Normal')
-        normal_title.setStyleSheet("border-style: solid;"
+        normal_title.setStyleSheet("color:#FFFFFF;"
+                                   "border-style: solid;"
                                   "border-width: 10px; "
-                                  "border-color: #dbd9d9;"
+                                  "border-color: #0080FF;"
                                   "border-radius:20px;"
                                   "padding: 10% 0; "
-                                  "background-color: #66B2FF")
+                                  "background-color: #0080FF")
         self.normal_label = self.Qlabel_style('-')
         layout.addWidget(normal_title)
         layout.addWidget(self.normal_label)
@@ -82,12 +89,13 @@ class GUI(QWidget):
     def abnormal_layout(self):
         layout = QHBoxLayout()
         abnormal_title = self.Qlabel_style('Abnormal')
-        abnormal_title.setStyleSheet("border-style: solid; "
+        abnormal_title.setStyleSheet("color:#FFFFFF;"
+                                     "border-style: solid; "
                                      "border-width: 10px; "
-                                     "border-color: #dbd9d9; "
+                                     "border-color: #F03434; "
                                     "border-radius:20px;"
                                     "padding:10% 0; "
-                                    "background-color: #F24949")
+                                    "background-color: #F03434")
         self.abnormal_label = self.Qlabel_style('-')
         layout.addWidget(abnormal_title)
         layout.addWidget(self.abnormal_label)
