@@ -5,10 +5,10 @@ import numpy as np
 
 class representation():
     def __init__(self):
-        self.DIR_PATH = "../../GUI_2nd_temp/"
+        self.DIR_PATH = "../../../../GUI_2nd_temp/"
 
-    def tdms_to_df(self, file:TdmsFile)->pd.DataFrame:
-        tdms_file = TdmsFile("".join([self.DIR_PATH,file]))
+    def tdms_to_df(self, file_name:TdmsFile)->pd.DataFrame:
+        tdms_file = TdmsFile("".join([self.DIR_PATH,file_name]))
         tdms_df = tdms_file["Untitled"].as_dataframe()
         print(tdms_df.shape)
         return tdms_df
@@ -33,8 +33,6 @@ class representation():
         transMat_I=np.zeros([res+2,res+2])
         transMat_V=np.zeros([res+2,res+2])
         for j in range(len(I_data)-1):
-            if I_data[j+1]>res:
-                print(I_data[j+1])
             transMat_I[I_data[j],I_data[j+1]] += 1
             transMat_V[V_data[j],V_data[j+1]] += 1
         return transMat_I, transMat_V
@@ -78,3 +76,14 @@ class representation():
         except:
             return None
         return np.array(temp_list)
+
+if __name__ == "__main__":
+    rep = representation()
+    import os, time
+    s = time.time()
+    temp = rep.merge_df(os.listdir(rep.DIR_PATH))
+    a2 = time.time()
+    print(a2-s)
+    temp_preprocess = rep.transform_2D(temp, 9000, 28)
+    print(temp_preprocess.shape)
+    print(time.time()-a2)

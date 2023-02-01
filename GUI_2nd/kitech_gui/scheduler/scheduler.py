@@ -1,9 +1,7 @@
-import os
-import time
-
 import numpy as np
 
-import representation, directory, gui, model
+from kitech_gui.model import model, representation
+from kitech_gui.scheduler import directory
 from apscheduler.schedulers.background import BackgroundScheduler
 import tensorflow as tf
 

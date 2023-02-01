@@ -1,11 +1,10 @@
 import sys
+import numpy as np
 from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QVBoxLayout, QHBoxLayout, QListWidget
 from PyQt5.QtCore import Qt
-from apscheduler.schedulers.qt import QtScheduler
-import directory
-import representation
-import model
-import numpy as np
+from kitech_gui.scheduler import directory
+from kitech_gui.model import model, representation
+
 
 class GUI(QWidget):
 
@@ -15,7 +14,7 @@ class GUI(QWidget):
         self._total = 0
         self._normal = 0
         self._abnormal = 0
-        self.sched = directory.dir_info("../../GUI_2nd_temp")  # 수정필요
+        self.sched = directory.dir_info("../../../../GUI_2nd_temp")  # 수정필요
         self.preprocess = representation.representation()
 
     def initUI(self):
