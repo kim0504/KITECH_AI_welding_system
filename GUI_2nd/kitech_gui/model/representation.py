@@ -5,10 +5,10 @@ import numpy as np
 
 class representation():
     def __init__(self):
-        self.DIR_PATH = "../../../../GUI_2nd_temp/"
+        self.DIR_PATH = "D:\한국생산기술연구원\과제\노후 철도차륜 재제조용 스마트 용접 시스템 기술개발\code\GUI_2nd_temp"
 
     def tdms_to_df(self, file_name:TdmsFile)->pd.DataFrame:
-        tdms_file = TdmsFile("".join([self.DIR_PATH,file_name]))
+        tdms_file = TdmsFile("\\".join([self.DIR_PATH,file_name]))
         tdms_df = tdms_file["Untitled"].as_dataframe()
         print(tdms_df.shape)
         return tdms_df
@@ -70,6 +70,7 @@ class representation():
             if len(tdms_df) > size:
                 global I_minmax, V_minmax
                 I_minmax, V_minmax = self.set_range(tdms_df)
+
                 for i in range(0, len(tdms_df), size):
                     con_trans = self.generate_matirces(tdms_df[i:i+size], 28)
                     temp_list.append(con_trans)
@@ -79,11 +80,19 @@ class representation():
 
 if __name__ == "__main__":
     rep = representation()
+    file_name = 'w_22-10-12_0840_001.tdms'
     import os, time
     s = time.time()
-    temp = rep.merge_df(os.listdir(rep.DIR_PATH))
+    print(os.listdir(rep.DIR_PATH))
+    tdms_file = TdmsFile("".join([rep.DIR_PATH,'/',file_name]))
+
+    print(type(tdms_file))
     a2 = time.time()
-    print(a2-s)
-    temp_preprocess = rep.transform_2D(temp, 9000, 28)
+    print(a2 - s)
+    tdms_file = tdms_file["Untitled"].as_dataframe()
+    a3 = time.time()
+    print(a3-a2)
+
+    temp_preprocess = rep.transform_2D(tdms_file, 9000, 28)
     print(temp_preprocess.shape)
     print(time.time()-a2)

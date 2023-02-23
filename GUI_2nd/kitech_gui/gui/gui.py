@@ -14,7 +14,7 @@ class GUI(QWidget):
         self._total = 0
         self._normal = 0
         self._abnormal = 0
-        self.sched = directory.dir_info("../../../../GUI_2nd_temp")  # 수정필요
+        self.sched = directory.dir_info("D:\한국생산기술연구원\과제\노후 철도차륜 재제조용 스마트 용접 시스템 기술개발\code\GUI_2nd_temp")  # 수정필요
         self.preprocess = representation.representation()
 
     def initUI(self):
@@ -127,6 +127,7 @@ class GUI(QWidget):
             self.total_label.setText(str(self._total))
             self.normal_label.setText(str(self._normal))
             self.abnormal_label.setText(str(self._abnormal))
+            self.sched.create_result_txt(self._total, self._normal)
             for file in self.sched.get_new_file():
                 self.listview.addItem(file)
             self.sched.update_dir_list()
