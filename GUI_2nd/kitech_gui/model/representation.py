@@ -5,12 +5,13 @@ import numpy as np
 
 class representation():
     def __init__(self):
-        self.DIR_PATH = "D:\한국생산기술연구원\과제\노후 철도차륜 재제조용 스마트 용접 시스템 기술개발\code\GUI_2nd_temp"
+        self.DIR_PATH = '../'
 
     def tdms_to_df(self, file_name:TdmsFile)->pd.DataFrame:
-        tdms_file = TdmsFile("\\".join([self.DIR_PATH,file_name]))
+        print("".join([self.DIR_PATH,file_name]))
+        tdms_file = TdmsFile("".join([self.DIR_PATH,file_name]))
         tdms_df = tdms_file["Untitled"].as_dataframe()
-        print(tdms_df.shape)
+        tdms_df.columns = ['Time', 'Voltage', 'Voltage_0', 'Voltage_1']
         return tdms_df
 
     def merge_df(self, files:list)->pd.DataFrame:
@@ -70,29 +71,22 @@ class representation():
             if len(tdms_df) > size:
                 global I_minmax, V_minmax
                 I_minmax, V_minmax = self.set_range(tdms_df)
-
                 for i in range(0, len(tdms_df), size):
                     con_trans = self.generate_matirces(tdms_df[i:i+size], 28)
                     temp_list.append(con_trans)
+
         except:
             return None
+
         return np.array(temp_list)
 
 if __name__ == "__main__":
-    rep = representation()
-    file_name = 'w_22-10-12_0840_001.tdms'
-    import os, time
-    s = time.time()
-    print(os.listdir(rep.DIR_PATH))
-    tdms_file = TdmsFile("".join([rep.DIR_PATH,'/',file_name]))
-
-    print(type(tdms_file))
-    a2 = time.time()
-    print(a2 - s)
-    tdms_file = tdms_file["Untitled"].as_dataframe()
-    a3 = time.time()
-    print(a3-a2)
-
-    temp_preprocess = rep.transform_2D(tdms_file, 9000, 28)
-    print(temp_preprocess.shape)
-    print(time.time()-a2)
+    pass
+    import os
+    print(os.listdir('../../../'))
+    file = 'WAT211022-3_21-10-22_1135_004.tdms'
+    a = representation()
+    ggg = a.tdms_to_df("".join(['../../../',file]))
+    print(ggg.shape)
+    gg = a.transform_2D(ggg, 20000, 28)
+    print(gg.shape)
