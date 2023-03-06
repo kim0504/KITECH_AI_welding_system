@@ -8,13 +8,15 @@ from kitech_gui.model import model, representation
 
 class GUI(QWidget):
 
+    MODEL_NAME = 'kitech_binary_230227.h5'
+
     def __init__(self):
         super().__init__()
         self.initUI()
         self._total = 0
         self._normal = 0
         self._abnormal = 0
-        self.sched = directory.dir_info("D:\한국생산기술연구원\과제\노후 철도차륜 재제조용 스마트 용접 시스템 기술개발\code\GUI_2nd_temp")  # 수정필요
+        self.sched = directory.dir_info()
         self.preprocess = representation.representation()
 
     def initUI(self):
@@ -118,9 +120,10 @@ class GUI(QWidget):
 
     def update(self):
         convert = self.preprocess.transform_2D(self.preprocess.merge_df(self.sched.get_new_file()), 9000, 28)
+        print(convert)
         if convert is not None:
-            pred = model.Model('kitech_binary.h5').predict(convert)
-            normal = len(np.where(pred < 0.5)[0])
+            pred = model.Model(self.MODEL_NAME).predict(convert)
+            normal = len(np.where(  pred < 0.5)[0])
             self._total += len(pred)
             self._normal += normal
             self._abnormal += len(pred) - normal
@@ -133,13 +136,3 @@ class GUI(QWidget):
             self.sched.update_dir_list()
         else:
             print("new file is not detected")
-
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    ex = GUI()
-
-    # scheduler = QtScheduler()
-    # scheduler.add_job(ex.update, 'interval', seconds=20)
-    # scheduler.start()
-
-    sys.exit(app.exec_())

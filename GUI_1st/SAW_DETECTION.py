@@ -8,7 +8,7 @@ import sys
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
-import GUI_kitech, GUI_hanyang
+import GUI_kitech
 
 class MyApp(QWidget):
 
@@ -36,10 +36,10 @@ class MyApp(QWidget):
         
     def initUI(self):
         self.tab2 = GUI_kitech.MyApp()
-        self.tab3 = GUI_hanyang.MyApp()
+        # self.tab3 = GUI_hanyang.MyApp()
         tabs = QTabWidget()
         tabs.addTab(self.tab2, 'KITECH')
-        tabs.addTab(self.tab3, 'HANYANG')
+        # tabs.addTab(self.tab3, 'HANYANG')
 
         vbox = QVBoxLayout()
         vbox.addLayout(self.load_layout())
@@ -57,7 +57,7 @@ class MyApp(QWidget):
         fname=QFileDialog.getOpenFileName(self, '', '', 'tdms(*.tdms)')   
         self.load_label.setText(str(fname[0].split("/")[-1]))
         self.tab2.btn_fun_FileLoad(fname[0])
-        self.tab3.btn_fun_FileLoad(fname[0])
+        # self.tab3.btn_fun_FileLoad(fname[0])
         
 if __name__ == '__main__':
     app = QApplication(sys.argv)

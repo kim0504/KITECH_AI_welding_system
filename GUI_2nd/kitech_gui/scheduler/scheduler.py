@@ -19,20 +19,5 @@ class scheduler(BackgroundScheduler):
         normal = len(np.where(a < 0.5)[0])
         print(len(a), normal, len(a) - normal, sep="\n")
 
-if __name__ == '__main__':
-    pass
-    # pass
-    # model_path = "E:\welding_defect_detection_binary\Model\kitech_binary.h5"  # 수정 필요
-    # file_path = "../GUI_2nd_temp"
-    # sched = directory.dir_info(file_path)
-    # preprocess = representation.representation()
-    # temp = preprocess.merge_df(sched.inner_list())
-    # convert = preprocess.transform_2D(temp, 9000, 28)
-    # print(convert.shape)
-    # model = tf.keras.models.load_model(model_path)
-    # a = model.predict(convert)
-    # normal = len(np.where(a<0.5)[0])
-    # print(len(a),normal,len(a)-normal, sep="\n")
-
 
 

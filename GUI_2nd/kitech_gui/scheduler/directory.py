@@ -32,9 +32,3 @@ class dir_info():
 
     def get_only_tdms(self):
         return [file for file in os.listdir(self._file_path) if file.endswith(".tdms")]
-
-if __name__ == "__main__":
-    print(os.listdir('../../../'))
-    print(dir_info().get_only_tdms())
-    print(dir_info().dir_list())
-    print("hi")

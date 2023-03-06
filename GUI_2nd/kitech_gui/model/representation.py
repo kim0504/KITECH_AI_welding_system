@@ -8,10 +8,12 @@ class representation():
         self.DIR_PATH = '../'
 
     def tdms_to_df(self, file_name:TdmsFile)->pd.DataFrame:
-        print("".join([self.DIR_PATH,file_name]))
         tdms_file = TdmsFile("".join([self.DIR_PATH,file_name]))
         tdms_df = tdms_file["Untitled"].as_dataframe()
-        tdms_df.columns = ['Time', 'Voltage', 'Voltage_0', 'Voltage_1']
+        if len(tdms_df.columns) == 5:
+            tdms_df.columns = ['Time', 'Voltage', 'Voltage_0', 'Voltage_1', 'Rotation_angle']
+        elif len(tdms_df.columns) == 4:
+            tdms_df.columns = ['Time', 'Voltage', 'Voltage_0', 'Voltage_1']
         return tdms_df
 
     def merge_df(self, files:list)->pd.DataFrame:
@@ -79,14 +81,3 @@ class representation():
             return None
 
         return np.array(temp_list)
-
-if __name__ == "__main__":
-    pass
-    import os
-    print(os.listdir('../../../'))
-    file = 'WAT211022-3_21-10-22_1135_004.tdms'
-    a = representation()
-    ggg = a.tdms_to_df("".join(['../../../',file]))
-    print(ggg.shape)
-    gg = a.transform_2D(ggg, 20000, 28)
-    print(gg.shape)

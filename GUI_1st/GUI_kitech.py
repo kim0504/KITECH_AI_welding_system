@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 import tensorflow as tf
 
 global model
-model = tf.keras.models.load_model('./Model/kitech_binary.h5')
+model = tf.keras.models.load_model('./kitech_binary_230227.h5')
 
 class MyApp(QWidget):
     def __init__(self):
