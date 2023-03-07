@@ -26,10 +26,10 @@ class representation():
             return df_list[0]
 
     def set_range(self, tdms_df):
-        I = tdms_df['Voltage']
-        V = tdms_df['Voltage_0']
-        I_minmax=[I.min(), I.max()]
-        V_minmax=[V.min(), V.max()]
+        I_minmax = [tdms_df['Voltage'].quantile(q=0.0001, interpolation='nearest'),
+                    tdms_df['Voltage'].quantile(q=0.9999, interpolation='nearest')]
+        V_minmax = [tdms_df['Voltage_0'].quantile(q=0.0001, interpolation='nearest'),
+                    tdms_df['Voltage_0'].quantile(q=0.9999, interpolation='nearest')]
         return I_minmax, V_minmax
 
     def transition_matrix(self, I_data, V_data, res):
