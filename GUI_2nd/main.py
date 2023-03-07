@@ -8,7 +8,7 @@ if __name__ == '__main__':
     gui_system = gui.GUI()
 
     scheduler = QtScheduler()
-    scheduler.add_job(gui_system.update, 'interval', seconds=20)
+    scheduler.add_job(gui_system.update, 'interval', seconds=60)
     scheduler.start()
 
     sys.exit(app.exec_())
