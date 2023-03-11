@@ -1,22 +1,16 @@
-import sys
-import numpy as np
-from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QVBoxLayout, QHBoxLayout, QListWidget
+from PyQt5.QtWidgets import QWidget, QLabel, QVBoxLayout, QHBoxLayout, QListWidget
 from PyQt5.QtCore import Qt
 from kitech_gui.scheduler import directory
-from kitech_gui.model import model, representation
-
+from kitech_gui.model import representation
 
 class GUI(QWidget):
-
-    MODEL_NAME = 'kitech_binary_230227.h5'
-
     def __init__(self):
         super().__init__()
         self.initUI()
         self._total = 0
         self._normal = 0
         self._abnormal = 0
-        self.sched = directory.dir_info()
+        self.sched = directory.Directory()
         self.preprocess = representation.representation()
 
     def initUI(self):
@@ -117,22 +111,3 @@ class GUI(QWidget):
         self.listview.setFont(font)
         layout.addWidget(self.listview)
         return layout
-
-    def update(self):
-        convert = self.preprocess.transform_2D(self.preprocess.merge_df(self.sched.get_new_file()), 9000, 28)
-        print(convert)
-        if convert is not None:
-            pred = model.Model(self.MODEL_NAME).predict(convert)
-            normal = len(np.where(  pred < 0.5)[0])
-            self._total += len(pred)
-            self._normal += normal
-            self._abnormal += len(pred) - normal
-            self.total_label.setText(str(self._total))
-            self.normal_label.setText(str(self._normal))
-            self.abnormal_label.setText(str(self._abnormal))
-            self.sched.create_result_txt(self._total, self._normal)
-            for file in self.sched.get_new_file():
-                self.listview.addItem(file)
-            self.sched.update_dir_list()
-        else:
-            print("new file is not detected")
