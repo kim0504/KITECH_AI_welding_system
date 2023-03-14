@@ -1,3 +1,9 @@
+"""
+GUI 코드
+전체 예측 개수, 정상 예측 개수, 비정상 예측 개수를 표시하는 레이아웃과
+현재까지 예측에 사용된 파일들의 이름을 표시하는 리스트뷰 레이아웃으로 구성
+"""
+
 from PyQt5.QtWidgets import QWidget, QLabel, QVBoxLayout, QHBoxLayout, QListWidget
 from PyQt5.QtCore import Qt
 from kitech_gui.scheduler import directory
